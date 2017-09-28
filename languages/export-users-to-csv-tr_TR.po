@@ -1,0 +1,78 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Export to CSV\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2011-10-30 17:05+0200\n"
+"PO-Revision-Date: \n"
+"Last-Translator: Tolga Kaprol <tolgakaprol@gmail.com>\n"
+"Language-Team: Tolga Kaprol <wordpress@codementors.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Language: Turkish\n"
+"X-Poedit-Country: TURKEY\n"
+"X-Poedit-SourceCharset: iso-8859-1\n"
+"X-Poedit-KeywordsList: __;_e\n"
+"X-Poedit-Basepath: .\n"
+"X-Poedit-SearchPath-0: .\n"
+
+#: export-users-to-csv.php:57
+msgid "Export to CSV"
+msgstr "CSV'ye Aktar"
+
+#: export-users-to-csv.php:135
+msgid "You do not have sufficient permissions to access this page."
+msgstr "Bu sayfaya ulaşmak için yetkiniz yoktur."
+
+#: export-users-to-csv.php:139
+msgid "Export users to a CSV file"
+msgstr "Kullanıcıları CSV'ye Aktar"
+
+#: export-users-to-csv.php:142
+msgid "No user found."
+msgstr "Kullanıcı bulunamadı."
+
+#: export-users-to-csv.php:149
+msgid "Role"
+msgstr "Rol"
+
+#: export-users-to-csv.php:153
+msgid "Every Role"
+msgstr "Tüm Roller"
+
+#: export-users-to-csv.php:163
+msgid "Date range"
+msgstr "Tarih Aralığı"
+
+#: export-users-to-csv.php:166
+msgid "Start Date"
+msgstr "Başlangıç Tarihi"
+
+#: export-users-to-csv.php:170
+msgid "End Date"
+msgstr "Bitiş Tarihi"
+
+#: export-users-to-csv.php:178
+msgid "Export"
+msgstr "Dışa Aktar"
+
+#~ msgid "Do you want to continue?"
+#~ msgstr "Devam etmek istiyor musunuz?"
+
+#~ msgid "What it does "
+#~ msgstr "Ne yapar?"
+
+#~ msgid "Parameters"
+#~ msgstr "Parametreler"
+
+#~ msgid "Example"
+#~ msgstr "Örnek"
+
+#~ msgid "Popular Posts"
+#~ msgstr "Popüler İçerikler"
+
+#~ msgid "Success! The cache table has been cleared!"
+#~ msgstr "Tebrikler! Önbellek tablosu temizlendi!"
+
+#~ msgid "Wordpress Popular Posts Stats"
+#~ msgstr "Wordpress Popüler İçerikler İstatistikleri"

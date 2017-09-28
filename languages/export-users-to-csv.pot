@@ -1,0 +1,78 @@
+# Translation of the WordPress plugin Export Users to CSV 0.3 by PubPoet.
+# Copyright (C) 2011 PubPoet
+# This file is distributed under the same license as the Export Users to CSV package.
+# Ulrich Sossou <http://github.com/sorich87>, 2011.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Export Users to CSV 0.3\n"
+"Report-Msgid-Bugs-To: http://wordpress.org/tag/export-users-to-csv\n"
+"POT-Creation-Date: 2011-11-27 09:07+0100\n"
+"PO-Revision-Date: 2011-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Ulrich Sossou <http://github.com/sorich87>\n"
+"Language-Team: Ulrich Sossou <http://github.com/sorich87>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: export-users-to-csv.php:58
+msgid "Export to CSV"
+msgstr ""
+
+#: export-users-to-csv.php:138
+msgid "You do not have sufficient permissions to access this page."
+msgstr ""
+
+#: export-users-to-csv.php:142
+msgid "Export users to a CSV file"
+msgstr ""
+
+#: export-users-to-csv.php:145
+msgid "No user found."
+msgstr ""
+
+#: export-users-to-csv.php:152
+msgid "Role"
+msgstr ""
+
+#: export-users-to-csv.php:156
+msgid "Every Role"
+msgstr ""
+
+#: export-users-to-csv.php:166
+msgid "Date range"
+msgstr ""
+
+#: export-users-to-csv.php:169
+msgid "Start Date"
+msgstr ""
+
+#: export-users-to-csv.php:173
+msgid "End Date"
+msgstr ""
+
+#: export-users-to-csv.php:181
+msgid "Export"
+msgstr ""
+
+#. Plugin Name of the plugin/theme
+msgid "Export Users to CSV"
+msgstr ""
+
+#. Plugin URI of the plugin/theme
+msgid "http://pubpoet.com/plugins/"
+msgstr ""
+
+#. Description of the plugin/theme
+msgid "Export Users data and metadata to a csv file."
+msgstr ""
+
+#. Author of the plugin/theme
+msgid "PubPoet"
+msgstr ""
+
+#. Author URI of the plugin/theme
+msgid "http://pubpoet.com/"
+msgstr ""
