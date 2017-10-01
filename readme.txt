@@ -1,17 +1,19 @@
 === Plugin Name ===
-Contributors: sorich87
+Contributors: webdevmattcrom
 Tags: user, users, csv, batch, export, exporter, admin
-Requires at least: 3.2
-Tested up to: 3.8
-Stable tag: 1.0.0
+Requires at least: 4.2
+Tested up to: 4.8
+Stable tag: 0.3
 
 Export users data and metadata to a csv file
 
 == Description ==
 
-A plugin that export ALL user data and meta data, and that works!
+A plugin that exports ALL user data and user meta to a CSV file, elegantly and simply.
 
-You can even export the users by role and registration date range.
+Export users by role and optionally set a registration date range.
+
+Export is found in "Users > Export to CSV"
 
 = Features =
 
@@ -20,34 +22,28 @@ You can even export the users by role and registration date range.
 * Exports users by role
 * Exports users by date range
 
-For feature request and bug reports, [please use the forums](http://wordpress.org/tags/export-users-to-csv?forum_id=10#postform).
+Issues and Pull Requests for feature requests or bug reports [are welcome at Github](https://github.com/mathetos/export-users-to-csv).
 
 == Installation ==
 
 For an automatic installation through WordPress:
 
 1. Go to the 'Add New' plugins screen in your WordPress admin area
-1. Search for 'Export Users to CSV'
-1. Click 'Install Now' and activate the plugin
-1. Go the 'Users' menu, under 'Export to CSV'
-
-
-Or use a nifty tool by WordPress lead developer Mark Jaquith:
-
-1. Visit [this link](http://coveredwebservices.com/wp-plugin-install/?plugin=export-users-to-csv) and follow the instructions.
+2. Search for 'Export Users to CSV'
+3. Click 'Install Now' and activate the plugin
+4. Go the 'Users' menu, under 'Export to CSV'
 
 
 For a manual installation via FTP:
 
 1. Upload the `export-users-to-csv` directory to the `/wp-content/plugins/` directory
-1. Activate the plugin through the 'Plugins' screen in your WordPress admin area
-1. Go the 'Users' menu, under 'Export to CSV'
-
+2. Activate the plugin through the 'Plugins' screen in your WordPress admin area
+3. Go the 'Users' menu, under 'Export to CSV'
 
 To upload the plugin through WordPress, instead of FTP:
 
 1. Upload the downloaded zip file on the 'Add New' plugins screen (see the 'Upload' tab) in your WordPress admin area and activate.
-1. Go the 'Users' menu, under 'Export to CSV'
+2. Go the 'Users' menu, under 'Export to CSV'
 
 == Frequently Asked Questions ==
 
@@ -61,6 +57,9 @@ Click on the 'Export to CSV' link in the 'Users' menu, choose the role and the d
 
 == Changelog ==
 
+= 0.3 =
+* This plugin has been adopted by [Matt Cromwell](https://profiles.wordpress.org/webdevmattcrom). You can expect new features to be rolled out soon.
+
 = 0.2 =
 * First public release.
 * Improved memory usage.
@@ -71,6 +70,9 @@ Click on the 'Export to CSV' link in the 'Users' menu, choose the role and the d
 * First release.
 
 == Upgrade Notice ==
+
+= 0.3 =
+* This plugin has been adopted by [Matt Cromwell](https://profiles.wordpress.org/webdevmattcrom). You can expect new features to be rolled out soon.
 
 = 0.2 =
 Improved memory usage. Added date range selection. Added readme.txt.

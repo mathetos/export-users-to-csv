@@ -1,19 +1,15 @@
 <?php
-/**
- * @package Export_Users_to_CSV
- * @version 1.0.0
- */
 /*
 Plugin Name: Export Users to CSV
 Plugin URI: http://wordpress.org/extend/plugins/export-users-to-csv/
 Description: Export Users data and metadata to a csv file.
-Version: 1.0.0
-Author: Ulrich Sossou
-Author URI: http://ulrichsossou.com/
+Version: 0.3
+Author: Matt Cromwell
+Author URI: https://www.mattcromwell.com/products/export-users-to-csv
 License: GPL2
 Text Domain: export-users-to-csv
 */
-/*  Copyright 2011  Ulrich Sossou  (http://github.com/sorich87)
+/*  Copyright 2017  Matt Cromwell  (http://github.com/mathetos/export-users-to-csv)
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License, version 2, as
