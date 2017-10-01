@@ -3,7 +3,7 @@ Contributors: webdevmattcrom
 Tags: user, users, csv, batch, export, exporter, admin
 Requires at least: 4.2
 Tested up to: 4.8
-Stable tag: 0.3
+Stable tag: 1.0.1
 
 Export users data and metadata to a csv file
 
@@ -57,7 +57,7 @@ Click on the 'Export to CSV' link in the 'Users' menu, choose the role and the d
 
 == Changelog ==
 
-= 0.3 =
+= 1.0.1 =
 * This plugin has been adopted by [Matt Cromwell](https://profiles.wordpress.org/webdevmattcrom). You can expect new features to be rolled out soon.
 
 = 0.2 =
@@ -71,7 +71,7 @@ Click on the 'Export to CSV' link in the 'Users' menu, choose the role and the d
 
 == Upgrade Notice ==
 
-= 0.3 =
+= 1.0.1 =
 * This plugin has been adopted by [Matt Cromwell](https://profiles.wordpress.org/webdevmattcrom). You can expect new features to be rolled out soon.
 
 = 0.2 =
