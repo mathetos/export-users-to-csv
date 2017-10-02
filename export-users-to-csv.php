@@ -40,7 +40,8 @@ class PP_EU_Export_Users {
 	 * @since 0.1
 	 **/
 	public function __construct() {
-		add_action( 'admin_menu', array( $this, 'add_admin_pages' ) );
+		//add_action( 'admin_menu', array( $this, 'add_admin_pages' ) );
+		add_filter( 'export_args', array( $this, 'filter_export_args' ) );
 		add_action( 'init', array( $this, 'generate_csv' ) );
 		add_filter( 'pp_eu_exclude_data', array( $this, 'exclude_data' ) );
 	}
@@ -53,6 +54,10 @@ class PP_EU_Export_Users {
 	public function add_admin_pages() {
 		add_users_page( __( 'Export to CSV', 'export-users-to-csv' ), __( 'Export to CSV', 'export-users-to-csv' ), 'list_users', 'export-users-to-csv', array( $this, 'users_page' ) );
 	}
+
+	public function filter_export_args() {
+	    echo '<p>TEST!</p>';
+    }
 
 	/**
 	 * Process content of CSV file
