@@ -25,7 +25,6 @@ Text Domain: export-users-to-csv
     Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-load_plugin_textdomain( 'export-users-to-csv', false, basename( dirname( __FILE__ ) ) . '/languages' );
 
 /**
  * Main plugin class
@@ -44,6 +43,17 @@ class PP_EU_Export_Users {
 		add_filter( 'export_args', array( $this, 'filter_export_args' ) );
 		add_action( 'init', array( $this, 'generate_csv' ) );
 		add_filter( 'pp_eu_exclude_data', array( $this, 'exclude_data' ) );
+		$this->load_textdomain();
+	}
+	
+	public function load_textdomain() {
+		$eutc_lang_dir = 'export-users-to-csv/languages/';
+		$eutc_lang_dir = apply_filters( 'export_users_to_csv_languages_directory', $eutc_lang_dir );
+		$locale = is_admin() && function_exists( 'get_user_locale' ) ? get_user_locale() : get_locale();
+		$locale = apply_filters( 'plugin_locale', $locale, 'export-users-to-csv' );
+		unload_textdomain( 'export-users-to-csv' );
+		load_textdomain( 'export-users-to-csv', WP_LANG_DIR . '/export-users-to-csv/export-users-to-csv-' . $locale . '.mo' );
+		load_plugin_textdomain( 'export-users-to-csv', false, $eutc_lang_dir );
 	}
 
 	/**
