@@ -1,0 +1,79 @@
+# Translation of the WordPress plugin Export Users to CSV 0.3 by PubPoet.
+# Copyright (C) 2011 PubPoet
+# This file is distributed under the same license as the Export Users to CSV package.
+# Ulrich Sossou <http://github.com/sorich87>, 2011.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Export Users to CSV 0.3\n"
+"Report-Msgid-Bugs-To: http://wordpress.org/tag/export-users-to-csv\n"
+"POT-Creation-Date: 2011-11-27 09:07+0100\n"
+"PO-Revision-Date: 2017-10-27 23:38-0200\n"
+"Language-Team: Ulrich Sossou <http://github.com/sorich87>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 2.0.4\n"
+"Last-Translator: \n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"Language: pt_BR\n"
+
+#: export-users-to-csv.php:58
+msgid "Export to CSV"
+msgstr "Exportar para CSV"
+
+#: export-users-to-csv.php:138
+msgid "You do not have sufficient permissions to access this page."
+msgstr "Você não possui permissões suficientes para acessar esta página."
+
+#: export-users-to-csv.php:142
+msgid "Export users to a CSV file"
+msgstr "Exportar Usuários para CSV"
+
+#: export-users-to-csv.php:145
+msgid "No user found."
+msgstr "Nenhum utilizador encontrado"
+
+#: export-users-to-csv.php:152
+msgid "Role"
+msgstr "Função"
+
+#: export-users-to-csv.php:156
+msgid "Every Role"
+msgstr "Cada Função"
+
+#: export-users-to-csv.php:166
+msgid "Date range"
+msgstr "Faixa de data"
+
+#: export-users-to-csv.php:169
+msgid "Start Date"
+msgstr "Data Inicial"
+
+#: export-users-to-csv.php:173
+msgid "End Date"
+msgstr "Data final"
+
+#: export-users-to-csv.php:181
+msgid "Export"
+msgstr "Exportar"
+
+#. Plugin Name of the plugin/theme
+msgid "Export Users to CSV"
+msgstr "Exportar Usuários para CSV"
+
+#. Plugin URI of the plugin/theme
+msgid "http://pubpoet.com/plugins/"
+msgstr "http://pubpoet.com/plugins/"
+
+#. Description of the plugin/theme
+msgid "Export Users data and metadata to a csv file."
+msgstr "Exportar dados e metadados de usuários para um arquivo csv."
+
+#. Author of the plugin/theme
+msgid "PubPoet"
+msgstr "PubPoet"
+
+#. Author URI of the plugin/theme
+msgid "http://pubpoet.com/"
+msgstr "http://pubpoet.com/plugins/"
