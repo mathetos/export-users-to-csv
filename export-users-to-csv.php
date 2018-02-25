@@ -46,8 +46,7 @@ class PP_EU_Export_Users {
         // For extending the WP core exporter correctly.
 		add_action( 'export_wp', array( $this, 'generate_csv' ) );
         //add_action( 'init', array( $this, 'generate_csv' ) );
-
-
+        
 		add_filter( 'pp_eu_exclude_data', array( $this, 'exclude_data' ) );
 	}
 
@@ -77,40 +76,40 @@ class PP_EU_Export_Users {
                 });
             });
         </script>
-	        <fieldset>
-                <p>
-                    <label>
-                        <input type="radio" name="content" value="users"> Users
-                    </label>
-                </p>
-                <ul id="users-filters" class="export-filters">
-                    <li>
-                        <label><span class="label-responsive">Role:</span>
+        <fieldset>
+            <p>
+                <label>
+                    <input type="radio" name="content" value="users"> Users
+                </label>
+            </p>
+            <ul id="users-filters" class="export-filters">
+                <li>
+                    <label><span class="label-responsive">Role:</span>
 
-                            <select name="role" id="pp_eu_users_role" class="postform">
-		                        <?php
-		                        echo '<option value="">' . __( 'Every Role', 'export-users-to-csv' ) . '</option>';
-		                        global $wp_roles;
-		                        foreach ( $wp_roles->role_names as $role => $name ) {
-			                        echo "\n\t<option value='" . esc_attr( $role ) . "'>$name</option>";
-		                        }
-		                        ?>
-                            </select>
-                        </label>
-                    </li>
-                    <li>
-                        <label><span class="label-responsive">Date Range:</span>
-                        <select name="start_date" id="pp_eu_users_start_date">
-                            <option value="0"><?php _e( 'Start Date', 'export-users-to-csv' ); ?></option>
-		                    <?php $this->export_date_options(); ?>
+                        <select name="role" id="pp_eu_users_role" class="postform">
+                            <?php
+                            echo '<option value="">' . __( 'Every Role', 'export-users-to-csv' ) . '</option>';
+                            global $wp_roles;
+                            foreach ( $wp_roles->role_names as $role => $name ) {
+                                echo "\n\t<option value='" . esc_attr( $role ) . "'>$name</option>";
+                            }
+                            ?>
                         </select>
-                        <select name="end_date" id="pp_eu_users_end_date">
-                            <option value="0"><?php _e( 'End Date', 'export-users-to-csv' ); ?></option>
-		                    <?php $this->export_date_options(); ?>
-                        </select>
-                    </li>
-                </ul>
-            </fieldset>
+                    </label>
+                </li>
+                <li>
+                    <label><span class="label-responsive">Date Range:</span>
+                    <select name="start_date" id="pp_eu_users_start_date">
+                        <option value="0"><?php _e( 'Start Date', 'export-users-to-csv' ); ?></option>
+                        <?php $this->export_date_options(); ?>
+                    </select>
+                    <select name="end_date" id="pp_eu_users_end_date">
+                        <option value="0"><?php _e( 'End Date', 'export-users-to-csv' ); ?></option>
+                        <?php $this->export_date_options(); ?>
+                    </select>
+                </li>
+            </ul>
+        </fieldset>
         <?php
     }
 
@@ -119,13 +118,12 @@ class PP_EU_Export_Users {
 	 *
 	 * @since 0.1
 	 **/
-	public function generate_csv() {
-		if ( isset( $_POST['_wpnonce-pp-eu-export-users-users-page_export'] ) ) {
-			check_admin_referer( 'pp-eu-export-users-users-page_export', '_wpnonce-pp-eu-export-users-users-page_export' );
+	public function generate_csv( $args ) {
+
+		if ( 'users' == $args['content'] ) {
 
 			$args = array(
 				'fields' => 'all_with_meta',
-				'role' => stripslashes( $_POST['role'] )
 			);
 
 			add_action( 'pre_user_query', array( $this, 'pre_user_query' ) );
