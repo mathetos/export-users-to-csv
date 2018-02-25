@@ -40,139 +40,15 @@ class PP_EU_Export_Users {
 	 * @since 0.1
 	 **/
 	public function __construct() {
-		//add_action( 'admin_menu', array( $this, 'add_admin_pages' ) );
-		// add_filter( 'export_args', array( $this, 'filter_export_args' ) );
-		// add_action( 'init', array( $this, 'generate_csv' ) );
+		add_filter( 'export_filters', array( $this, 'filter_export_args' ) );
+
+		// Reference this plugin: https://wordpress.org/plugins/wp-exporter/
+        // For extending the WP core exporter correctly.
+		add_action( 'export_wp', array( $this, 'generate_csv' ) );
+        //add_action( 'init', array( $this, 'generate_csv' ) );
+
+
 		add_filter( 'pp_eu_exclude_data', array( $this, 'exclude_data' ) );
-		add_action( 'export_wp', array( $this, 'maybe_generate_csv' ) );
-		add_action( 'admin_head', array($this, 'add_to_export_screen') );
-	}
-
-	public function add_to_export_screen() 
-	{
-		if(get_current_screen()->id !== 'export') {
-			return;
-		}
-		$wp_roles = new WP_Roles();
-		$roles = $wp_roles->get_names();
-
-		$filters = '<ul id="users-csv-filters" class="export-filters">
-	<li>
-		<label><span class="label-responsive">Authors:</span>
-		<select name="">';
-		foreach ($roles as $role_value => $role_name) {
-			$filters .= '<option value="'. $role_value .'">'. $role_name .'</option>';
-		}
-		$filters .='</select>		
-		</label>
-	</li>
-	<li>
-		<fieldset>
-		<legend class="screen-reader-text">Date range:</legend>
-		<label for="users-csv-start-date" class="label-responsive">Registered after:</label>
-		<input type="date" name="users_csv_start_date" id="users-csv-start-date">
-		<label for="users-csv-end-date" class="label-responsive">Registered before:</label>
-		<input type="date" name="page_end_date" id="page-end-date">
-		</fieldset>
-	</li>
-	
-</ul>';
-	?>
-	<script type="text/javascript">
-		jQuery(document).ready(function($){
-	 		var fieldset = $('#export-filters fieldset').first();
-	 		var radio = $('<p><label><input type="radio" name="content" value="users_csv"> Users (CSV)</label></p>')
-	 		fieldset.append(radio)
-	 		var filters = $('<?php echo str_replace("\n", '', $filters); ?>')
-	 		fieldset.append(filters)
-
-	 		var filters = $('#export-filters .export-filters');
-
-	 		$(document).on('change', '#export-filters input:radio', function() {
-	 			if($(this).val() === 'users_csv') {
-	 				filters.slideUp('fast')
-	 				$('#users-csv-filters').slideDown();
-	 			}
-	 		});
-		});
-	</script>
-	<?php
-	}
-
-	public function maybe_generate_csv() 
-	{
-		if(isset($_GET['content']) && $_GET['content'] === 'users_csv') {
-			$query = array(
-				'number' => -1,
-			);
-
-			$date_query = array();
-
-			if(isset($_GET['users_csv_start_date'])) {
-				$date_query['after'] = $_GET['users_csv_start_date'];
-			}
-
-			if(isset($_GET['users_csv_end_date'])) {
-				$date_query['before'] = $_GET['users_csv_end_date'];
-			}
-
-			if(isset($_GET['users_csv_role'])) {
-				$query['roles'] = $_GET['users_csv_role'];
-			}
-
-			$query['date_query'] = $date_query;
-
-			$users = get_users($query);
-
-			if ( ! $users ) {
-				$referer = add_query_arg( 'error', 'empty', wp_get_referer() );
-				wp_redirect( $referer );
-				exit;
-			}
-
-			$sitename = sanitize_key( get_bloginfo( 'name' ) );
-			if ( ! empty( $sitename ) )
-				$sitename .= '.';
-			$filename = $sitename . 'users.' . date( 'Y-m-d-H-i-s' ) . '.csv';
-
-			header( 'Content-Description: File Transfer' );
-			header( 'Content-Disposition: attachment; filename=' . $filename );
-			header( 'Content-Type: text/csv; charset=' . get_option( 'blog_charset' ), true );
-
-			$exclude_data = apply_filters( 'pp_eu_exclude_data', array() );
-
-			global $wpdb;
-
-			$data_keys = array(
-				'ID', 'user_login', 'user_pass',
-				'user_nicename', 'user_email', 'user_url',
-				'user_registered', 'user_activation_key', 'user_status',
-				'display_name'
-			);
-			$meta_keys = $wpdb->get_results( "SELECT distinct(meta_key) FROM $wpdb->usermeta" );
-			$meta_keys = wp_list_pluck( $meta_keys, 'meta_key' );
-			$fields = array_merge( $data_keys, $meta_keys );
-
-			$headers = array();
-			foreach ( $fields as $key => $field ) {
-				if ( in_array( $field, $exclude_data ) )
-					unset( $fields[$key] );
-				else
-					$headers[] = '"' . strtolower( $field ) . '"';
-			}
-			echo implode( ',', $headers ) . "\n";
-
-			foreach ( $users as $user ) {
-				$data = array();
-				foreach ( $fields as $field ) {
-					$value = isset( $user->{$field} ) ? $user->{$field} : '';
-					$value = is_array( $value ) ? serialize( $value ) : $value;
-					$data[] = '"' . str_replace( '"', '""', $value ) . '"';
-				}
-				echo implode( ',', $data ) . "\n";
-			}
-			exit;
-		}
 	}
 
 	/**
@@ -183,6 +59,60 @@ class PP_EU_Export_Users {
 	public function add_admin_pages() {
 		add_users_page( __( 'Export to CSV', 'export-users-to-csv' ), __( 'Export to CSV', 'export-users-to-csv' ), 'list_users', 'export-users-to-csv', array( $this, 'users_page' ) );
 	}
+
+	public function filter_export_args() {
+	    ?>
+        <script type="text/javascript">
+            jQuery(document).ready(function($){
+                var form = $('#export-filters'),
+                    filters = form.find('.export-filters');
+                filters.hide();
+                form.find('input:radio').off('change').change(function() {
+                    filters.slideUp('fast');
+                    switch ( $(this).val() ) {
+                        case 'posts': $('#post-filters').slideDown(); break;
+                        case 'pages': $('#page-filters').slideDown(); break;
+                        case 'users': $('#users-filters').slideDown(); break;
+                    }
+                });
+            });
+        </script>
+	        <fieldset>
+                <p>
+                    <label>
+                        <input type="radio" name="content" value="users"> Users
+                    </label>
+                </p>
+                <ul id="users-filters" class="export-filters">
+                    <li>
+                        <label><span class="label-responsive">Role:</span>
+
+                            <select name="role" id="pp_eu_users_role" class="postform">
+		                        <?php
+		                        echo '<option value="">' . __( 'Every Role', 'export-users-to-csv' ) . '</option>';
+		                        global $wp_roles;
+		                        foreach ( $wp_roles->role_names as $role => $name ) {
+			                        echo "\n\t<option value='" . esc_attr( $role ) . "'>$name</option>";
+		                        }
+		                        ?>
+                            </select>
+                        </label>
+                    </li>
+                    <li>
+                        <label><span class="label-responsive">Date Range:</span>
+                        <select name="start_date" id="pp_eu_users_start_date">
+                            <option value="0"><?php _e( 'Start Date', 'export-users-to-csv' ); ?></option>
+		                    <?php $this->export_date_options(); ?>
+                        </select>
+                        <select name="end_date" id="pp_eu_users_end_date">
+                            <option value="0"><?php _e( 'End Date', 'export-users-to-csv' ); ?></option>
+		                    <?php $this->export_date_options(); ?>
+                        </select>
+                    </li>
+                </ul>
+            </fieldset>
+        <?php
+    }
 
 	/**
 	 * Process content of CSV file
