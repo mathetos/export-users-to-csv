@@ -41,13 +41,37 @@ class PP_EU_Export_Users {
 	 **/
 	public function __construct() {
 		add_filter( 'export_filters', array( $this, 'filter_export_args' ) );
-
-		// Reference this plugin: https://wordpress.org/plugins/wp-exporter/
-        // For extending the WP core exporter correctly.
 		add_action( 'export_wp', array( $this, 'generate_csv' ) );
-        //add_action( 'init', array( $this, 'generate_csv' ) );
-
 		add_filter( 'pp_eu_exclude_data', array( $this, 'exclude_data' ) );
+		add_action( 'init', array( $this, 'load_textdomain' ), 0 );
+
+		$this->setup_constants();
+
+	}
+
+	private function setup_constants() {
+		// Plugin version
+		if ( ! defined( 'EUTC_VERSION' ) ) {
+			define( 'EUTC_VERSION', '1.1' );
+		}
+		// Plugin Root File
+		if ( ! defined( 'EUTC_PLUGIN_FILE' ) ) {
+			define( 'EUTC_PLUGIN_FILE', __FILE__ );
+		}
+		// Plugin Folder Path
+		if ( ! defined( 'EUTC_PLUGIN_DIR' ) ) {
+			define( 'EUTC_PLUGIN_DIR', plugin_dir_path( EUTC_PLUGIN_FILE ) );
+		}
+	}
+
+	public function load_textdomain() {
+        $eutc_lang_dir = dirname( plugin_basename( EUTC_PLUGIN_FILE ) ) . '/languages/';
+        $eutc_lang_dir = apply_filters( 'eutc_languages_directory', $eutc_lang_dir );
+        $locale = is_admin() && function_exists( 'get_user_locale' ) ? get_user_locale() : get_locale();
+        $locale = apply_filters( 'plugin_locale', $locale, 'export-users-to-csv' );
+        unload_textdomain( 'export-users-to-csv' );
+        load_textdomain( 'export-users-to-csv', WP_LANG_DIR . '/export-users-to-csv/export-users-to-csv-' . $locale . '.mo' );
+        load_plugin_textdomain( 'export-users-to-csv', false, $eutc_lang_dir );
 	}
 
 	public function filter_export_args() {
@@ -92,12 +116,12 @@ class PP_EU_Export_Users {
         <fieldset>
             <p>
                 <label>
-                    <input type="radio" name="content" value="users"> Users
+                    <input type="radio" name="content" value="users"><?php echo __('Users', 'export-users-to-csv'); ?>
                 </label>
             </p>
             <ul id="users-filters" class="export-filters">
                 <li>
-                    <label><span class="label-responsive">Role:</span>
+                    <label><span class="label-responsive"><?php echo __('Role:', 'export-users-to-csv'); ?></span>
 
                         <select name="role" id="pp_eu_users_role" class="postform">
                             <?php
@@ -111,7 +135,7 @@ class PP_EU_Export_Users {
                     </label>
                 </li>
                 <li>
-                    <label><span class="label-responsive">Date Range:</span>
+                    <label><span class="label-responsive"><?php echo __('Date Range:', 'export-users-to-csv'); ?></span>
                     <select name="start_date" id="pp_eu_users_start_date">
                         <option value="0"><?php _e( 'Start Date', 'export-users-to-csv' ); ?></option>
                         <?php $this->export_date_options(); ?>
