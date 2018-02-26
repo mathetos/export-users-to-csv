@@ -44,7 +44,7 @@ class PP_EU_Export_Users {
 		add_action( 'export_wp', array( $this, 'generate_csv' ) );
 		add_filter( 'pp_eu_exclude_data', array( $this, 'exclude_data' ) );
 		add_action( 'init', array( $this, 'load_textdomain' ), 0 );
-
+		add_action('admin_notices', array($this, 'eutc_add_export_button') );
 		$this->setup_constants();
 
 	}
@@ -290,6 +290,29 @@ class PP_EU_Export_Users {
 
 			$month = zeroise( $date->month, 2 );
 			echo '<option value="' . $date->year . '-' . $month . '">' . $wp_locale->get_month( $month ) . ' ' . $date->year . '</option>';
+		}
+	}
+
+	function eutc_add_export_button(){
+		$screen = get_current_screen();
+		if( $screen->id !='users' ){
+			return;
+		} else {
+			?>
+            <div class="wrap export-users">
+                <a href="<?php echo admin_url( 'export.php' );?>" class="page-title-action">Export Users</a>
+            </div>
+
+            <style scoped>
+                .wrap.export-users {
+                    float: none;
+                    display: inline;
+                    position: absolute;
+                    left: 12em;
+                    top: 1.45em;
+                }
+            </style>
+			<?php
 		}
 	}
 }
