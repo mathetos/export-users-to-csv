@@ -3,7 +3,7 @@ Contributors: webdevmattcrom
 Tags: user, users, csv, batch, export, exporter, admin
 Requires at least: 4.2
 Tested up to: 4.8
-Stable tag: 1.0.1
+Stable tag: 1.1
 
 Export users data and metadata to a csv file
 
@@ -13,7 +13,7 @@ A plugin that exports ALL user data and user meta to a CSV file, elegantly and s
 
 Export users by role and optionally set a registration date range.
 
-Export is found in "Users > Export to CSV"
+Export is found in "Tools > Export", or with the "Export Users" button on the Users admin screen.
 
 = Features =
 
@@ -49,13 +49,19 @@ To upload the plugin through WordPress, instead of FTP:
 
 = How to use? =
 
-Click on the 'Export to CSV' link in the 'Users' menu, choose the role and the date range or don't select anything if you want to export all users, then click 'Export'. That's all!
+Click on the 'Export Users' button at the top of the 'Users' admin screen, or navigate to "Tools > Export." From there, choose "Users" as your export, then choose the role and the date range. Choose nothing at all if you want to export all users, then click 'Export'. That's all!
 
 == Screenshots ==
 
-1. User export screen
+1. The User export tool
+2. The User Export button at the top of the Users admin page
 
 == Changelog ==
+
+= 1.1 (February 25, 2018) =
+* Moved screen to the "Tools > Export" screen to leverage WordPress core export features. [Github Issue #2](https://github.com/mathetos/export-users-to-csv/issues/2)
+* Removed local translations and updated load_textdomain to look for the localized files in the correct WordPress core folder. [Github Issue #1](https://github.com/mathetos/export-users-to-csv/issues/1)
+* Add "Export Users" button to the Users admin screen for increased visibility. [Github Issue #11](https://github.com/mathetos/export-users-to-csv/issues/11)
 
 = 1.0.1 =
 * This plugin has been adopted by [Matt Cromwell](https://profiles.wordpress.org/webdevmattcrom). You can expect new features to be rolled out soon.
@@ -71,11 +77,8 @@ Click on the 'Export to CSV' link in the 'Users' menu, choose the role and the d
 
 == Upgrade Notice ==
 
+= 1.1 =
+* The User export now uses WordPress core export features and is found at "Tools > Export".
+
 = 1.0.1 =
 * This plugin has been adopted by [Matt Cromwell](https://profiles.wordpress.org/webdevmattcrom). You can expect new features to be rolled out soon.
-
-= 0.2 =
-Improved memory usage. Added date range selection. Added readme.txt.
-
-= 0.1 =
-First release.

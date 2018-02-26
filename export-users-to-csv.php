@@ -3,7 +3,7 @@
 Plugin Name: Export Users to CSV
 Plugin URI: http://wordpress.org/extend/plugins/export-users-to-csv/
 Description: Export Users data and metadata to a csv file.
-Version: 1.0.1
+Version: 1.1
 Author: Matt Cromwell
 Author URI: https://www.mattcromwell.com/products/export-users-to-csv
 License: GPL2
