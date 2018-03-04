@@ -58,6 +58,9 @@ Click on the 'Export Users' button at the top of the 'Users' admin screen, or na
 
 == Changelog ==
 
+= 1.1.1 (March 4, 2018) =
+* Fixed bug that prevented the date range from working as intended. Thanks @sbskamey for reporting: https://github.com/mathetos/export-users-to-csv/issues/12
+
 = 1.1 (February 25, 2018) =
 * Moved screen to the "Tools > Export" screen to leverage WordPress core export features. [Github Issue #2](https://github.com/mathetos/export-users-to-csv/issues/2)
 * Removed local translations and updated load_textdomain to look for the localized files in the correct WordPress core folder. [Github Issue #1](https://github.com/mathetos/export-users-to-csv/issues/1)

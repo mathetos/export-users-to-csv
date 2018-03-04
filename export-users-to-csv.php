@@ -3,7 +3,7 @@
 Plugin Name: Export Users to CSV
 Plugin URI: http://wordpress.org/extend/plugins/export-users-to-csv/
 Description: Export Users data and metadata to a csv file.
-Version: 1.1
+Version: 1.1.1
 Author: Matt Cromwell
 Author URI: https://www.mattcromwell.com/products/export-users-to-csv
 License: GPL2
@@ -259,11 +259,11 @@ class PP_EU_Export_Users {
 
 		$where = '';
 
-		if ( ! empty( $_POST['start_date'] ) )
-			$where .= $wpdb->prepare( " AND $wpdb->users.user_registered >= %s", date( 'Y-m-d', strtotime( $_POST['start_date'] ) ) );
+		if ( ! empty( $_GET['start_date'] ) )
+			$where .= $wpdb->prepare( " AND $wpdb->users.user_registered >= %s", date( 'Y-m-d', strtotime( $_GET['start_date'] ) ) );
 
-		if ( ! empty( $_POST['end_date'] ) )
-			$where .= $wpdb->prepare( " AND $wpdb->users.user_registered < %s", date( 'Y-m-d', strtotime( '+1 month', strtotime( $_POST['end_date'] ) ) ) );
+		if ( ! empty( $_GET['end_date'] ) )
+			$where .= $wpdb->prepare( " AND $wpdb->users.user_registered < %s", date( 'Y-m-d', strtotime( '+1 month', strtotime( $_GET['end_date'] ) ) ) );
 
 		if ( ! empty( $where ) )
 			$user_search->query_where = str_replace( 'WHERE 1=1', "WHERE 1=1$where", $user_search->query_where );
