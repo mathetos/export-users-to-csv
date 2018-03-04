@@ -51,6 +51,16 @@ To upload the plugin through WordPress, instead of FTP:
 
 Click on the 'Export Users' button at the top of the 'Users' admin screen, or navigate to "Tools > Export." From there, choose "Users" as your export, then choose the role and the date range. Choose nothing at all if you want to export all users, then click 'Export'. That's all!
 
+= How do I include the Passwords? =
+
+I don't really recommend it since storing passwords in plain-text can be a real liability issue. Nevertheless, you can add this filter to your site to allow the password to be included as a column in your CSV file:
+
+`add_filter('pp_eu_exclude_data', 'my_prefix_include_password');
+
+ function my_prefix_include_password() {
+     return array();
+ }`
+
 == Screenshots ==
 
 1. The User export tool
