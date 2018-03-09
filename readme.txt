@@ -5,15 +5,17 @@ Requires at least: 4.2
 Tested up to: 4.8
 Stable tag: 1.1.1
 
-Export users data and metadata to a csv file
+Export users data and metadata to a csv file.
 
 == Description ==
 
-A plugin that exports ALL user data and user meta to a CSV file, elegantly and simply.
+A WordPress plugin that exports user data and meta data. You can even export the users by role and registration date range. 
 
 Export users by role and optionally set a registration date range.
 
 Export is found in "Tools > Export", or with the "Export Users" button on the Users admin screen.
+
+By default, it does not export user passwords as a security concern. See the [FAQ](#faq) for how to include them regardless.
 
 = Features =
 
@@ -69,7 +71,7 @@ I don't really recommend it since storing passwords in plain-text can be a real 
 == Changelog ==
 
 = 1.1.1 (March 4, 2018) =
-* Fixed bug that prevented the date range from working as intended. Thanks @sbskamey for reporting: https://github.com/mathetos/export-users-to-csv/issues/12
+* Fixed bug that prevented the date range from working as intended. Thanks @sbskamey for [reporting the issue](https://github.com/mathetos/export-users-to-csv/issues/12).
 
 = 1.1 (February 25, 2018) =
 * Moved screen to the "Tools > Export" screen to leverage WordPress core export features. [Github Issue #2](https://github.com/mathetos/export-users-to-csv/issues/2)
