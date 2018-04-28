@@ -1,0 +1,12 @@
+.eutcsv_leave_review {
+    background-color: #d1ead3;
+    border-left-color: #68bb6c;
+    color: #2b5f2d;
+    border-style: solid;
+    border-width: 0 0 0 12px;
+    display: block;
+    margin-bottom: 24px;
+    padding: 12px 20px;
+    line-height: 0.7;
+    font-size: 110%;
+}

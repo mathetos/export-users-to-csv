@@ -40,11 +40,12 @@ class PP_EU_Export_Users {
 	 *
 	 * @since 0.1
 	 **/
-	
+
 	public function __construct() {
 		add_filter( 'export_filters', array( $this, 'filter_export_args' ) );
 		add_filter( 'pp_eu_exclude_data', array( $this, 'exclude_data' ) );
 
+		add_action( 'admin_enqueue_scripts', array( $this, 'load_admin_scripts' ) );
 		add_action( 'export_wp', array( $this, 'generate_csv' ) );
 		add_action( 'init', array( $this, 'load_textdomain' ), 0 );
 		add_action( 'admin_notices', array($this, 'eutc_add_export_button') );
@@ -66,6 +67,11 @@ class PP_EU_Export_Users {
 		if ( ! defined( 'EUTC_PLUGIN_DIR' ) ) {
 			define( 'EUTC_PLUGIN_DIR', plugin_dir_path( EUTC_PLUGIN_FILE ) );
 		}
+
+		// Plugin Folder URL
+		if ( ! defined( 'EUTC_PLUGIN_URL' ) ) {
+			define( 'EUTC_PLUGIN_URL', plugin_dir_url( EUTC_PLUGIN_FILE ) );
+		}
 	}
 
 	public function load_textdomain() {
@@ -78,52 +84,25 @@ class PP_EU_Export_Users {
         load_plugin_textdomain( 'export-users-to-csv', false, $eutc_lang_dir );
 	}
 
+	public function load_admin_scripts($hook) {
+
+		if( $hook != 'export.php' )
+			return;
+
+		wp_enqueue_script( 'eutc-admin-js', EUTC_PLUGIN_URL . 'assets/eutc_admin.js' );
+		wp_enqueue_style( 'eutc-admin-css', EUTC_PLUGIN_URL . 'assets/eutc_admin.css' );
+	}
+
+
 	public function filter_export_args() {
 	    ?>
-        <style>
-            .eutcsv_leave_review {
-                background-color: #d1ead3;
-                border-left-color: #68bb6c;
-                color: #2b5f2d;
-                border-style: solid;
-                border-width: 0 0 0 12px;
-                display: block;
-                margin-bottom: 24px;
-                padding: 12px 20px;
-                line-height: 0.7;
-                font-size: 110%;
-            }
-        </style>
-
-        <script type="text/javascript">
-            jQuery(document).ready(function($){
-
-                var form = $('#export-filters'),
-                    review = $('.eutcsv_leave_review'),
-                    filters = form.find('.export-filters');
-                filters.hide();
-                review.hide();
-                $( 'input[value="Download Export File"]' ).on( "click", function() {
-                    $(review).delay(2000).slideDown(500);
-                });
-
-                form.find('input:radio').off('change').change(function() {
-                    filters.slideUp('fast');
-                    switch ( $(this).val() ) {
-                        case 'posts': $('#post-filters').slideDown(); break;
-                        case 'pages': $('#page-filters').slideDown(); break;
-                        case 'users': $('#users-filters').slideDown(); break;
-                    }
-                });
-            });
-        </script>
         <fieldset>
             <p>
                 <label>
-                    <input type="radio" name="content" value="users"><?php echo __('Users', 'export-users-to-csv'); ?>
+                    <input type="radio" name="content" value="users" class="user-export"><?php echo __('Users', 'export-users-to-csv'); ?>
                 </label>
             </p>
-            <ul id="users-filters" class="export-filters">
+            <ul id="users-filters" class="users-filters">
                 <li>
                     <label><span class="label-responsive"><?php echo __('Role:', 'export-users-to-csv'); ?></span>
 
@@ -154,7 +133,7 @@ class PP_EU_Export_Users {
         <div class="eutcsv_leave_review">
             <h4><?php echo __('Success!', 'export-users-to-csv' ); ?></h4>
             <p><?php echo __('Your file should be downloaded now.', 'export-users-to-csv');?></p>
-            <p><?php echo __('If "Export Users to CSV" has been useful for you, please take a minute to let me know by <a href="https://wordpress.org/support/plugin/export-users-to-csv/reviews/?filter=5">leaving a great rating here</a>.', 'export-users-to-csv'); ?></p>
+            <p><?php echo __('If "Export Users to CSV" has been useful for you, please take a minute to let me know by <a href="https://wordpress.org/support/plugin/export-users-to-csv/reviews/?filter=5">leaving a great rating here</a>; or <a href="https://www.mattcromwell.com/product/export-users-csv" target="_blank" rel="noopener noreferrer">give a small donation to keep development going strong</a>.', 'export-users-to-csv'); ?></p>
         </div>
         <?php
     }
