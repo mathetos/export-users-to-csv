@@ -9,6 +9,7 @@ Author URI: https://www.mattcromwell.com/products/export-users-to-csv
 License: GPL2
 Text Domain: export-users-to-csv
 */
+
 /*  Copyright 2017  Matt Cromwell  (http://github.com/mathetos/export-users-to-csv)
 
     This program is free software; you can redistribute it and/or modify
@@ -39,12 +40,15 @@ class PP_EU_Export_Users {
 	 *
 	 * @since 0.1
 	 **/
+	
 	public function __construct() {
 		add_filter( 'export_filters', array( $this, 'filter_export_args' ) );
-		add_action( 'export_wp', array( $this, 'generate_csv' ) );
 		add_filter( 'pp_eu_exclude_data', array( $this, 'exclude_data' ) );
+
+		add_action( 'export_wp', array( $this, 'generate_csv' ) );
 		add_action( 'init', array( $this, 'load_textdomain' ), 0 );
-		add_action('admin_notices', array($this, 'eutc_add_export_button') );
+		add_action( 'admin_notices', array($this, 'eutc_add_export_button') );
+
 		$this->setup_constants();
 
 	}
