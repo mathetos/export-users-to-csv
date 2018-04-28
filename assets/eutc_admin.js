@@ -12,7 +12,7 @@ jQuery(document).ready(function ($) {
         $(review).delay(2000).slideDown(500);
     });
 
-    $('input[type=radio]').change(function () {
+    $('form#export-filters input[type=radio]').change(function () {
         if ($('input.user-export').is(':checked')) {
             users.slideDown();
         }

@@ -85,12 +85,13 @@ class PP_EU_Export_Users {
 	}
 
 	public function load_admin_scripts($hook) {
+        $version = ( WP_DEBUG === true ? mt_rand() : EUTC_VERSION );
 
 		if( $hook != 'export.php' )
 			return;
 
 		wp_enqueue_script( 'eutc-admin-js', EUTC_PLUGIN_URL . 'assets/eutc_admin.js' );
-		wp_enqueue_style( 'eutc-admin-css', EUTC_PLUGIN_URL . 'assets/eutc_admin.css' );
+		wp_enqueue_style( 'eutc-admin-css', EUTC_PLUGIN_URL . 'assets/eutc_admin.css', null, $version, 'all' );
 	}
 
 
@@ -104,7 +105,7 @@ class PP_EU_Export_Users {
             </p>
             <ul id="users-filters" class="users-filters">
                 <li>
-                    <label><span class="label-responsive"><?php echo __('Role:', 'export-users-to-csv'); ?></span>
+                    <label><span class="label-responsive"><?php echo __('Role:', 'export-users-to-csv'); ?></span></label>
 
                         <select name="role" id="pp_eu_users_role" class="postform">
                             <?php
@@ -115,10 +116,10 @@ class PP_EU_Export_Users {
                             }
                             ?>
                         </select>
-                    </label>
+
                 </li>
                 <li>
-                    <label><span class="label-responsive"><?php echo __('Date Range:', 'export-users-to-csv'); ?></span>
+                    <label><span class="label-responsive"><?php echo __('Date Range:', 'export-users-to-csv'); ?></span></label>
                     <select name="start_date" id="pp_eu_users_start_date">
                         <option value="0"><?php _e( 'Start Date', 'export-users-to-csv' ); ?></option>
                         <?php $this->export_date_options(); ?>
@@ -127,6 +128,10 @@ class PP_EU_Export_Users {
                         <option value="0"><?php _e( 'End Date', 'export-users-to-csv' ); ?></option>
                         <?php $this->export_date_options(); ?>
                     </select>
+
+                </li>
+                <li>
+                    <label>Include Password?</label><input type="checkbox" id="eutc_include_password" value="Yes"> <span>Yes</span>
                 </li>
             </ul>
         </fieldset>

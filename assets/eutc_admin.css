@@ -10,3 +10,28 @@
     line-height: 0.7;
     font-size: 110%;
 }
+
+ul#users-filters li {
+    line-height: 2rem;
+}
+
+#users-filters li label {
+    width: 150px;
+    display: inline-block;
+}
+
+#users-filters li input[type="checkbox"] {
+    margin: 0 6px 0 0;
+}
+
+#users-filters li input[type="checkbox"] + span {
+    position: relative;
+    top: 2px;
+}
+
+#export-filters li select {
+    margin-left: 0;
+    border: 0;
+    position: relative;
+    left: -3px;
+}
