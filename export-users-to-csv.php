@@ -131,7 +131,7 @@ class PP_EU_Export_Users {
 
                 </li>
                 <li>
-                    <label>Include Password?</label><input type="checkbox" id="eutc_include_password" value="Yes"> <span>Yes</span>
+                    <label>Include Password?</label><input type="checkbox" id="eutc_include_password" name="eutc_include_password" value="Yes"> <span>Yes</span>
                 </li>
             </ul>
         </fieldset>
@@ -237,7 +237,14 @@ class PP_EU_Export_Users {
 	}
 
 	public function exclude_data() {
-		$exclude = array( 'user_pass', 'user_activation_key' );
+
+	    $pass = $_GET['eutc_include_password'];
+
+	    if ( ! empty($pass) ) {
+		    $exclude = array();
+	    } else {
+	        $exclude = array( 'user_pass', 'user_activation_key' );
+        }
 
 		return $exclude;
 	}
