@@ -2,8 +2,8 @@
 Contributors: webdevmattcrom
 Tags: user, users, csv, batch, export, exporter, admin
 Requires at least: 4.2
-Tested up to: 4.8
-Stable tag: 1.1.1
+Tested up to: 4.9
+Stable tag: 1.2
 
 Export users data and metadata to a csv file.
 
