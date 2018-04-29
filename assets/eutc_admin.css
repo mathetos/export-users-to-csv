@@ -31,7 +31,6 @@ ul#users-filters li {
 
 #export-filters li select {
     margin-left: 0;
-    border: 0;
     position: relative;
-    left: -3px;
+    left: -4px;
 }
