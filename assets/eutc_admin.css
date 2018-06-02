@@ -29,6 +29,15 @@ ul#users-filters li {
     top: 2px;
 }
 
+#users-filters li input.select2-search__field {
+    min-width: 200px;
+}
+
+ul.select2-results__options li[aria-selected="true"] {
+    background: #aaa;
+    color: #999999;
+}
+
 #export-filters li select {
     margin-left: 0;
     position: relative;

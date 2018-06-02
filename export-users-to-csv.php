@@ -67,7 +67,6 @@ class PP_EU_Export_Users {
 		if ( ! defined( 'EUTC_PLUGIN_DIR' ) ) {
 			define( 'EUTC_PLUGIN_DIR', plugin_dir_path( EUTC_PLUGIN_FILE ) );
 		}
-
 		// Plugin Folder URL
 		if ( ! defined( 'EUTC_PLUGIN_URL' ) ) {
 			define( 'EUTC_PLUGIN_URL', plugin_dir_url( EUTC_PLUGIN_FILE ) );
@@ -90,13 +89,35 @@ class PP_EU_Export_Users {
 		if( $hook != 'export.php' )
 			return;
 
-		wp_enqueue_script( 'eutc-admin-js', EUTC_PLUGIN_URL . 'assets/eutc_admin.js' );
+		$handle = 'select2';
+		$list = 'enqueued';
+		if (wp_script_is( $handle, $list )) {
+			return;
+		} else {
+			wp_enqueue_style( 'eutc-select2', 'https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css' );
+			wp_enqueue_script( 'eutc-select2', 'https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js', array( 'jquery' ) );
+		}
+
+		wp_enqueue_script( 'eutc-admin-js', EUTC_PLUGIN_URL . 'assets/eutc_admin.js' , array('eutc-select2') );
 		wp_enqueue_style( 'eutc-admin-css', EUTC_PLUGIN_URL . 'assets/eutc_admin.css', null, $version, 'all' );
+
 	}
 
 
 	public function filter_export_args() {
 	    ?>
+        <script>
+            jQuery(document).ready(function ($) {
+                $('#pp_eu_users_role').select2({
+                    width:'resolve',
+                    placeholder:'Choose Your User Roles',
+                    minimumResultsForSearch:10,
+                    closeOnSelect: false,
+                    dropdownParent: $('form#export-filters'),
+                    theme: "classic"
+                });
+            });
+        </script>
         <fieldset>
             <p>
                 <label>
@@ -105,33 +126,38 @@ class PP_EU_Export_Users {
             </p>
             <ul id="users-filters" class="users-filters">
                 <li>
-                    <label><span class="label-responsive"><?php echo __('Role:', 'export-users-to-csv'); ?></span></label>
-
-                        <select name="role" id="pp_eu_users_role" class="postform">
-                            <?php
-                            echo '<option value="">' . __( 'Every Role', 'export-users-to-csv' ) . '</option>';
-                            global $wp_roles;
-                            foreach ( $wp_roles->role_names as $role => $name ) {
-                                echo "\n\t<option value='" . esc_attr( $role ) . "'>$name</option>";
-                            }
-                            ?>
-                        </select>
+                    <label><span
+                                class="label-responsive"><?php echo __( 'Role:', 'export-users-to-csv' ); ?></span></label>
+                    <select multiple="multiple" name="role" id="pp_eu_users_role" class="postform">
+				        <?php
+				        echo '<option value="">' . __( 'Every Role', 'export-users-to-csv' ) . '</option>';
+				        global $wp_roles;
+				        foreach ( $wp_roles->role_names as $role => $name ) {
+					        echo "\n\t<option value='" . esc_attr( $role ) . "'>$name</option>";
+				        }
+				        ?>
+                    </select>
 
                 </li>
                 <li>
-                    <label><span class="label-responsive"><?php echo __('Date Range:', 'export-users-to-csv'); ?></span></label>
+                    <label><span
+                                class="label-responsive"><?php echo __( 'Date Range:', 'export-users-to-csv' ); ?></span></label>
                     <select name="start_date" id="pp_eu_users_start_date">
                         <option value="0"><?php _e( 'Start Date', 'export-users-to-csv' ); ?></option>
-                        <?php $this->export_date_options(); ?>
+				        <?php $this->export_date_options(); ?>
                     </select>
                     <select name="end_date" id="pp_eu_users_end_date">
                         <option value="0"><?php _e( 'End Date', 'export-users-to-csv' ); ?></option>
-                        <?php $this->export_date_options(); ?>
+				        <?php $this->export_date_options(); ?>
                     </select>
 
                 </li>
                 <li>
-                    <label>Include Password?</label><input type="checkbox" id="eutc_include_password" name="eutc_include_password" value="Yes"> <span>Yes</span>
+                    <label><?php echo __( 'Include Password?', 'export-users-to-csv' ); ?></label><input type="checkbox"
+                                                                                                         id="eutc_include_password"
+                                                                                                         name="eutc_include_password"
+                                                                                                         value="Yes">
+                    <span><?php echo __( 'Yes', 'export-users-to-csv' ); ?></span>
                 </li>
             </ul>
         </fieldset>
@@ -152,25 +178,25 @@ class PP_EU_Export_Users {
 
 		if ( 'users' == $args['content'] ) {
 
-			$defaults = array( 'content'    => 'all',
-			                   'author'     => false,
-			                   'category'   => false,
-			                   'start_date' => false,
-			                   'end_date'   => false,
-			                   'status'     => false,
-			);
+			$user_args = apply_filters('eutc_user_args',
+                array(
+                    'content'    => 'all',
+                    'author'     => false,
+                    'category'   => false,
+                    'start_date' => false,
+                    'end_date'   => false,
+                    'status'     => false,
+                    'role'       => wp_kses_post( $_GET['role'] ),
+                    'fields'     => 'all_with_meta',
+			    )
+            );
 
-			$user_args = array(
-				'role'   => wp_kses_post( $_GET['role'] ),
-				'fields' => 'all_with_meta',
-			);
-
-			$merge_args = array_merge( $defaults, $user_args );
-
-			$args = wp_parse_args( $args, $merge_args );
+			$args = wp_parse_args( $args, $user_args );
 
 			add_action( 'pre_user_query', array( $this, 'pre_user_query' ) );
+
 			$users = get_users( $args );
+
 			remove_action( 'pre_user_query', array( $this, 'pre_user_query' ) );
 
 			if ( ! $users ) {
@@ -180,9 +206,11 @@ class PP_EU_Export_Users {
 			}
 
 			$sitename = sanitize_key( get_bloginfo( 'name' ) );
+
 			if ( ! empty( $sitename ) ) {
 				$sitename .= '.';
 			}
+
 			$filename = $sitename . 'users.' . date( 'Y-m-d-H-i-s' ) . '.csv';
 
 			header( 'Content-Description: File Transfer' );
@@ -205,8 +233,11 @@ class PP_EU_Export_Users {
 				'user_status',
 				'display_name'
 			);
+
 			$meta_keys = $wpdb->get_results( "SELECT distinct(meta_key) FROM $wpdb->usermeta" );
+
 			$meta_keys = wp_list_pluck( $meta_keys, 'meta_key' );
+
 			$fields    = array_merge( $data_keys, $meta_keys );
 
 			$headers = array();
@@ -238,7 +269,7 @@ class PP_EU_Export_Users {
 
 	public function exclude_data() {
 
-	    $pass = $_GET['eutc_include_password'];
+	    $pass = ( ! empty($_GET['eutc_include_password']) ? 'Yes' : '');
 
 	    if ( ! empty($pass) ) {
 		    $exclude = array();

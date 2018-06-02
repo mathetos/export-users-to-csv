@@ -20,4 +20,5 @@ jQuery(document).ready(function ($) {
             users.slideUp();
         }
     });
+
 });
