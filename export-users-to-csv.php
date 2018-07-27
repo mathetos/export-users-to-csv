@@ -241,7 +241,7 @@ class PP_EU_Export_Users
 				$data = array();
 				foreach ($fields as $field) {
 					$value  = isset($user->{$field}) ? $user->{$field} : '';
-					$value  = is_array($value) ? serialize($value) : $value;
+					$value  = is_object($value) || is_array($value) ? serialize($value) : $value;
 					$data[] = '"' . str_replace('"', '""', $value) . '"';
 				}
 
