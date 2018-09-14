@@ -221,13 +221,13 @@ class PP_EU_Export_Users {
 			$exclude_data = apply_filters( 'pp_eu_exclude_data', array(), $fields );
 
 			$headers = array();
-			$separator = apply_filters('eutc_separator', ',')
+			$separator = apply_filters('eutc_separator', ',');
 
 			foreach ( $fields as $key => $field ) {
 				if ( in_array( $field, $exclude_data ) ) {
 					unset( $fields[ $key ] );
 				} else {
-					$headers[] = '"' . strtolower( apply_filter( 'eutc_field_label', $field) ) . '"';
+					$headers[] = '"' . apply_filters( 'eutc_field_label', strtolower( $field ) ) . '"';
 				}
 			}
 
