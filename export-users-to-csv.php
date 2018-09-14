@@ -201,8 +201,6 @@ class PP_EU_Export_Users {
 			header( 'Content-Disposition: attachment; filename=' . $filename );
 			header( 'Content-Type: text/csv; charset=' . get_option( 'blog_charset' ), true );
 
-			$exclude_data = apply_filters( 'pp_eu_exclude_data', array() );
-
 			global $wpdb;
 
 			$data_keys = array(
@@ -220,18 +218,20 @@ class PP_EU_Export_Users {
 			$meta_keys = $wpdb->get_results( "SELECT distinct(meta_key) FROM $wpdb->usermeta" );
 			$meta_keys = wp_list_pluck( $meta_keys, 'meta_key' );
 			$fields    = array_merge( $data_keys, $meta_keys );
+			$exclude_data = apply_filters( 'pp_eu_exclude_data', array(), $fields );
 
 			$headers = array();
+			$separator = apply_filters('eutc_separator', ',')
 
 			foreach ( $fields as $key => $field ) {
 				if ( in_array( $field, $exclude_data ) ) {
 					unset( $fields[ $key ] );
 				} else {
-					$headers[] = '"' . strtolower( $field ) . '"';
+					$headers[] = '"' . strtolower( apply_filter( 'eutc_field_label', $field) ) . '"';
 				}
 			}
 
-			echo implode( ',', $headers ) . "\n";
+			echo implode( $separator, $headers ) . "\n";
 
 			foreach ( $users as $user ) {
 				$data = array();
@@ -241,7 +241,7 @@ class PP_EU_Export_Users {
 					$data[] = '"' . str_replace( '"', '""', $value ) . '"';
 				}
 
-				echo implode( ',', $data ) . "\n";
+				echo implode( $separator, $data ) . "\n";
 			}
 
 			exit;
