@@ -227,6 +227,7 @@ class PP_EU_Export_Users {
 				if ( in_array( $field, $exclude_data ) ) {
 					unset( $fields[ $key ] );
 				} else {
+					$field     = $this->escape_csv_values( $field );
 					$headers[] = '"' . strtolower( $field ) . '"';
 				}
 			}
@@ -238,6 +239,7 @@ class PP_EU_Export_Users {
 				foreach ( $fields as $field ) {
 					$value  = isset( $user->{$field} ) ? $user->{$field} : '';
 					$value  = is_array( $value ) ? serialize( $value ) : $value;
+					$value  = $this->escape_csv_values( $value );
 					$data[] = '"' . str_replace( '"', '""', $value ) . '"';
 				}
 
@@ -246,6 +248,79 @@ class PP_EU_Export_Users {
 
 			exit;
 		}
+	}
+
+	/**
+	 * Function to handle escaping CSV values to prevent CSV command injection.
+	 * CSV command injection only cares about the first character being one of the following:
+	 *           +    -    =   @
+	 * We will be escaping these lines using a single quote ( ' )
+	 * 
+	 * This function is built to have a modular approach to make future conversions easier
+	 *   as noted by the convert_from and convert_to variables. This will make working with
+	 *   other languages easier if needed.
+	 * 
+	 * A filter was added in a secure way as to not wipeout the chosen base conversions.
+	 * 
+	 * For conversions of strings, find information here:
+	 *   https://www.php.net/manual/en/function.mb-convert-encoding.php
+	 * 
+	 * @author    theritesites
+	 * @since     1.2
+	 * 
+	 * @param  string $value	Value going into CSV cell
+	 * @return string			Either returns 
+	 */
+	protected function escape_csv_values( $value ) {
+
+		// Lets just start with a fast check, no need for conversion overhead if we dont need a translation.
+		$char_start = substr( $value, 0, 1 );
+		if ( $char_start == '@' || $char_start == '+' || $char_start == '-' || $char_start == '=' ) {
+			return "'" . $value;
+		}
+		else {
+			// UTF-8 may be redundant here since the if statement above assumes UTF-8
+			//   ISO conversions are to cover some initial bases here, no specific reason these were chosen.
+			//   Find supported character encodings here:
+			//      https://www.php.net/manual/en/mbstring.supported-encodings.php
+			$convert_from = array( "UTF-8", "ISO-8859-1", "ISO-8859-15" );
+
+			// Lets make this easier on ourselves by translating to what we are used to.
+			$convert_to   = "UTF-8";
+
+			// Dont allow someone to wipe away all conversions
+			$added_conversions = apply_filters( 'eutc_convert_from', array( "bloop" ) );
+			if ( ! empty( $added_conversions ) ) {
+				// But add other character encoding to check for when converting
+				$possible_encodings = mb_list_encodings();
+				foreach ( $added_conversions as $new_conversion ) {
+					// Ensure the added encoding is a real encoding to prevent errors.
+					if ( in_array( $new_conversion, $possible_encodings ) ) {
+						if ( ! in_array( $new_conversion, $convert_from ) ) {
+							$convert_from[] = $new_conversion;
+						}
+					}
+				}
+			}
+
+			/**
+			 * Theres another option here for conversion encoding.
+			 *  mb_detect_encoding( $value, $convert_from, true )
+			 * This only checks the options put into the $convert_from variable.
+			 * We can greatly increase the overhead but also increase security by ommitting
+			 *   the last two parameters and having the function call as:
+			 *  mb_detect_encoding( $value )
+			 * 
+			 * This would check against the mbstring.language list, which is pretty extensive.
+			 */
+			$converted  = mb_convert_encoding( $value, $convert_to, mb_detect_encoding( $value, $convert_from, true ) );
+			
+			$char_start = substr( $converted, 0, 1 );
+			if ( $char_start == '@' || $char_start == '+' || $char_start == '-' || $char_start == '=' ) {
+				return "'" . $value;
+			}
+		}
+		return $value;
 	}
 
 	public function exclude_data() {
