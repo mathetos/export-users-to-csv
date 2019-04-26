@@ -1,5 +1,5 @@
 === Plugin Name ===
-Contributors: webdevmattcrom
+Contributors: webdevmattcrom, theritesites
 Tags: user, users, csv, batch, export, exporter, admin
 Requires at least: 4.2
 Tested up to: 4.8
